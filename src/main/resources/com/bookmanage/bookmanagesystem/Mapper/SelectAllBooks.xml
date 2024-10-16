@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bookmanage.bookmanagesystem.Mapper.SelectAllBooks">
+    <select id="selectAllBooks" resultType="com.bookmanage.bookmanagesystem.pojo.Books">
+        SELECT * FROM book_info
+          <where>
+            <if test="bookNames != 'null'">
+                bookName = #{bookNames}
+        <!--这里要用#{}占位符，
+        使用 bookName = #{bookName} 这种情况下 MyBatis 将处理 SQL 语句中的参数插入。
+        <where> 标签在生成 SQL 语句时，会自动处理前面的条件，并在适当的位置添加 AND 或 OR，因此在条件中你不需要手动添加 AND 。
+        在 @Param 注解中确保你的 Mapper 方法接收到 bookName 参数。
+
+
+
+        我的接口明明传的是bookRequests为啥可以直接用bookNames属性直接写在动态sql中
+
+        Fitten Code
+        在 MyBatis 中，当你传递一个对象作为参数（例如一个 BookRequests 类型的对象）时，你可以在动态 SQL 中直接使用该对象的属性，而不需要加上对象名称（例如 bookRequests.getbookNames()）。这主要是由于 MyBatis 参数解析的方式。
+
+        理解 MyBatis 的参数处理
+        传递的对象： 当你在 Mapper 接口的方法中传递一个对象（如 BookRequests）时，MyBatis 将该对象存储为参数并提供对其属性的访问。
+        直接使用属性： 在 XML 中使用动态 SQL 时，你可以直接引用对象的属性名称，而不需要在前面加上对象名。 MyBatis 会自动处理并找到相应的属性。
+
+        为什么可以直接使用属性
+        在以上示例中，当你调用 selectAllBooks 方法并传递一个 BookRequests 对象时，MyBatis 将这个对象的属性（如 bookNames、bookEditers 和 bookTypeid）存储在一个作用域内，你可以在 SQL 中直接引用它们。
+        MyBatis 在内部使用 OGNL（Object-Graph Navigation Language）来访问对象的属性，因此你只需使用属性名称本身，而不需要添加对象的前缀。
+
+        总结要点：
+        对象属性直接使用：通过将对象作为参数传递，你可以直接在 XML 中使用对象的属性名称。
+        自动解析：MyBatis 会自动解析并生成 SQL，从而简化 SQL 语句的书写。
+-->
+            </if>
+            <if test="bookEditers != 'null'">
+                and bookAuthor = #{bookEditers}
+            </if>
+            <if test="bookTypeid > -1">
+                and bookTypeId = #{bookTypeid}
+            </if>
+        </where>
+        limit #{startIndex} ,#{pageCount}
+    </select>
+    <select id="selectAllBookTypes" resultType="com.bookmanage.bookmanagesystem.pojo.BookTypes">
+        select distinct * from book_type
+    </select>
+    <select id="selectCountsOfBooks" resultType="Integer">
+        select count(bookId) from book_info
+    </select>
+</mapper>
