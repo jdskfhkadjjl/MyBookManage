@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 @Slf4j
 @Configuration
 public class Configration {
+    // todo 这是用来测试todo的
     @Bean
     public Integer method(){
         //第三方bean
