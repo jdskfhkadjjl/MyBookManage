@@ -9,5 +9,5 @@ import java.util.List;
 public interface BookManageService {
     List<Books> getAllBooks(BookRequests bookRequests);
     List<BookTypes> getAllBookTypes();
-    Integer getCountsOfBooks();
+    Integer getCountsOfBooks(String bookTypeId);
 }

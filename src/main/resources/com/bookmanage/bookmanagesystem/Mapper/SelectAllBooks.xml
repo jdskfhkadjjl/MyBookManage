@@ -8,7 +8,7 @@
         SELECT * FROM book_info
           <where>
             <if test="bookNames != 'null'">
-                bookName = #{bookNames}
+                 bookName like concat('%',#{bookNames},'%')
         <!--这里要用#{}占位符，
         使用 bookName = #{bookName} 这种情况下 MyBatis 将处理 SQL 语句中的参数插入。
         <where> 标签在生成 SQL 语句时，会自动处理前面的条件，并在适当的位置添加 AND 或 OR，因此在条件中你不需要手动添加 AND 。
@@ -35,9 +35,9 @@
 -->
             </if>
             <if test="bookEditers != 'null'">
-                and bookAuthor = #{bookEditers}
+                and bookAuthor like concat('%', #{bookEditers},'%')
             </if>
-            <if test="bookTypeid > -1">
+            <if test="bookTypeid > 0">
                 and bookTypeId = #{bookTypeid}
             </if>
         </where>
@@ -48,5 +48,10 @@
     </select>
     <select id="selectCountsOfBooks" resultType="Integer">
         select count(bookId) from book_info
+        <where>
+            <if test="bookTypeId>0">
+                bookTypeId=#{bookTypeId}
+            </if>
+        </where>
     </select>
 </mapper>

@@ -11,5 +11,5 @@ import java.util.List;
 public interface SelectAllBooks {
     List<Books> selectAllBooks(BookRequests bookRequests);
     List<BookTypes> selectAllBookTypes();
-    Integer selectCountsOfBooks();
+    Integer selectCountsOfBooks(String bookTypeId);
 }

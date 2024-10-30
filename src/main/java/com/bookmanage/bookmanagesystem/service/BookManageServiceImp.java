@@ -28,7 +28,8 @@ public class BookManageServiceImp implements BookManageService{
 //        log.info(iterator.next().toString());
         return selectAllBooks.selectAllBookTypes();
     }
-    public Integer getCountsOfBooks(){
-        return selectAllBooks.selectCountsOfBooks();
+    public Integer getCountsOfBooks(String bookTypeId){
+        return selectAllBooks.selectCountsOfBooks(bookTypeId);
     }
+
 }

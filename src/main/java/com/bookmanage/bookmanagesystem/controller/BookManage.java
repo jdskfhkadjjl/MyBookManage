@@ -6,7 +6,9 @@ import com.bookmanage.bookmanagesystem.pojo.Result;
 import com.bookmanage.bookmanagesystem.service.BookManageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.support.HttpRequestHandlerServlet;
 
 import java.util.List;
 
@@ -20,17 +22,16 @@ public class BookManage {
     public BookRequests bookRequests;
 
 
-    @GetMapping("/books")
+    @GetMapping("/books/all")
     public Result getAllBooks(@RequestParam(name = "bookName") String bookName,
                               @RequestParam(name = "bookEditer") String bookEditer,
                               @RequestParam("bookType") String bookType,
                               @RequestParam("startIndex") String startIndex,
                               @RequestParam("pageCount") String pageCount) {
-        //log.info(bookName);
-//      BookRequests bookRequests=new BookRequests();
         bookRequests.setBookNames(bookName);
         bookRequests.setBookEditers(bookEditer);
-
+        log.info("books/all");
+        log.info(bookName);
         if (bookType.equals("null")) {
             bookRequests.setBookTypeid(-1);
         } else {
@@ -38,15 +39,7 @@ public class BookManage {
         }
         bookRequests.setStartIndex(Integer.valueOf(startIndex));
         bookRequests.setPageCount(Integer.valueOf(pageCount));
-//        log.info("bookName: {}", bookRequests.getBookNames());
-//        log.info("bookEditer: {}", bookRequests.getBookEditers());
-//        log.info("bookType: {}", bookRequests.getBookTypeid());
         List<Books> o = bookManageService.getAllBooks(bookRequests);
-        //if (o != null) log.info(o.iterator().next().toString());
-//        if(o!=null){
-//            log.info("o不是空的");
-//            log.info(o.toString());
-//        }
         return Result.success(o);
     }
 
@@ -56,8 +49,8 @@ public class BookManage {
     }
 
     @GetMapping("/books/counts")
-    public Result getCountsOfBooks(){
-        return Result.success(bookManageService.getCountsOfBooks());
+    public Result getCountsOfBooks(@RequestParam String bookTypeId){
+        return Result.success(bookManageService.getCountsOfBooks(bookTypeId));
     }
 
 
