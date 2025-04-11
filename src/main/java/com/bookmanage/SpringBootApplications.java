@@ -1,13 +1,11 @@
-package com.bookmanage.bookmanagesystem;
+package com.bookmanage;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BookManageSystemApplication {
-
+public class SpringBootApplications {
     public static void main(String[] args) {
-        SpringApplication.run(BookManageSystemApplication.class, args);
+        SpringApplication.run(SpringBootApplications.class,args);
     }
-
 }
